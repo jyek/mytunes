@@ -19,7 +19,7 @@ var PlayerView = Backbone.View.extend({
     this.trigger('nextSong');
   },
 
-  stopPlay: function(){
+  songStop: function(){
     this.model = false;
     this.render();
   },

@@ -6,6 +6,7 @@ var SongQueueView = Backbone.View.extend({
   initialize: function() {
     this.render();
     this.showPlaylist();
+    this.collection.on('addSong', this.addSong, this);
   },
 
   render: function() {
@@ -18,18 +19,19 @@ var SongQueueView = Backbone.View.extend({
 
   showPlaylist: function(){
     _.each(this.collection.models, function(song){
-      console.log('sqv', this);
       this.addSong(song);
     }, this);
   },
 
   addSong: function(song) {
-    console.log('1', this.$el, song);
     this.$el.append( new SongQueueEntryView({model: song}).render() );
   },
 
   removeSongQueueEntry: function() {
-    this.$el.find('tr').first().detach();
+    console.log('SongQueueView: remove first song', this.collection);
+    this.$el.find('tr:nth-child(2)').remove();
+    var songToRemove = this.collection.at(0);
+    this.collection.remove( songToRemove );
   }
 
 

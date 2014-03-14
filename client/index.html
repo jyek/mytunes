@@ -54,7 +54,6 @@
         // set up model objects
         var library = new Songs(songData);
         var app = new AppModel({library: library});
-        console.log(library);
 
         // build a view for the top level of the whole app
         var appView = new AppView({model: app});
@@ -62,11 +61,10 @@
         // put the view onto the screen
         $('body').append(appView.render());
 
-        // Initiate the router
-        var app_router = window.router;
-        app_router = new AppRouter;
-        app_router.on('route:song', function(title) {
-          songTitle = title.replace(/-/g, ' ');
+        // initiate router
+        var appRouter = new AppRouter;
+        appRouter.on('route:song', function(title) {
+          var songTitle = title.replace(/-/g, ' ');
           var thisSong = library.find(function(song){
             return song.get('title') === songTitle;
           });

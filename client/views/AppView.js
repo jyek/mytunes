@@ -17,17 +17,15 @@ var AppView = Backbone.View.extend({
     }, this);
 
     this.model.on('stop', function(){
-      this.playerView.stopPlay();
+      this.playerView.songStop();
     }, this);
 
-    this.playerView.on('nextSong', function(model){
-      var sq = this.model.get('songQueue');
-      sq.models.shift();
-      if(sq.models.length > 0){
-        sq.models[0].play();
-      }
+    this.playerView.on('nextSong', function(){
       this.songQueueView.removeSongQueueEntry();
     }, this);
+
+    // start playing first song in loaded queue once view is ready
+    this.songQueueView.collection.load();
 
   },
 
